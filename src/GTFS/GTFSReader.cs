@@ -1477,6 +1477,18 @@ namespace GTFS
                 case "to_stop_id":
                     transfer.ToStopId = this.ParseFieldString(header.Name, fieldName, value);
                     break;
+                case "from_route_id":
+                    transfer.FromRouteId = this.ParseFieldString(header.Name, fieldName, value);
+                    break;
+                case "to_route_id":
+                    transfer.ToRouteId = this.ParseFieldString(header.Name, fieldName, value);
+                    break;
+                case "from_trip_id":
+                    transfer.FromTripId = this.ParseFieldString(header.Name, fieldName, value);
+                    break;
+                case "to_trip_id":
+                    transfer.ToTripId = this.ParseFieldString(header.Name, fieldName, value);
+                    break;
                 case "transfer_type":
                     transfer.TransferType = this.ParseFieldTransferType(header.Name, fieldName, value);
                     break;
@@ -1750,6 +1762,10 @@ namespace GTFS
                     return TransferType.MinimumTime;
                 case "3":
                     return TransferType.NotPossible;
+                case "4":
+                    return TransferType.InSeatTransfer;
+                case "5":
+                    return TransferType.NonInSeatTransfer;
             }
 
             throw new GTFSParseException(name, fieldName, value);

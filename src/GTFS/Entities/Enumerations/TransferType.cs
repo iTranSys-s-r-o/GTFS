@@ -42,6 +42,14 @@ namespace GTFS.Entities.Enumerations
         /// <summary>
         /// 3: Transfers are not possible between routes at this location.
         /// </summary>
-        NotPossible
+        NotPossible,
+        /// <summary>
+        /// 4: Passengers can transfer from one trip to another by staying onboard the same vehicle (an "in-seat transfer").
+        /// </summary>
+        InSeatTransfer,
+        /// <summary>
+        /// 5: In-seat transfers are not allowed between sequential trips. The passenger must alight from the vehicle and re-board. 
+        /// </summary>
+        NonInSeatTransfer
     }
 }

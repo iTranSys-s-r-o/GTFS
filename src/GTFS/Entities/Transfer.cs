@@ -34,21 +34,52 @@ namespace GTFS.Entities
         /// <summary>
         /// Gets or sets a stop or station where a connection between routes begins.
         /// </summary>
-        [Required]
         [FieldName("from_stop_id")]
         public string FromStopId { get; set; }
 
         /// <summary>
         /// Gets or sets a stop or station where a connection between routes ends.
         /// </summary>
-        [Required]
         [FieldName("to_stop_id")]
         public string ToStopId { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of connection for the specified (from_stop_id, to_stop_id) pair.
+        /// Identifies a route where a connection begins.
+        /// If from_route_id is defined, the transfer will apply to the arriving trip on the route for the given from_stop_id.
+        /// If both from_trip_id and from_route_id are defined, the trip_id must belong to the route_id, and from_trip_id will take precedence.
         /// </summary>
-        [Required]
+        [FieldName("from_route_id")]
+        public string FromRouteId { get; set; }
+
+        /// <summary>
+        /// Identifies a route where a connection ends.
+        /// If to_route_id is defined, the transfer will apply to the departing trip on the route for the given to_stop_id.
+        ///If both to_trip_id and to_route_id are defined, the trip_id must belong to the route_id, and to_trip_id will take precedence.
+        /// </summary>
+        [FieldName("to_route_id")]
+        public string ToRouteId { get; set; }
+
+        /// <summary>
+        /// Identifies a trip where a connection between routes begins.
+        /// If from_trip_id is defined, the transfer will apply to the arriving trip for the given from_stop_id.
+        /// If both from_trip_id and from_route_id are defined, the trip_id must belong to the route_id, and from_trip_id will take precedence.REQUIRED if transfer_type is 4 or 5.
+        /// </summary>
+        [FieldName("from_trip_id")]
+        public string FromTripId { get; set; }
+
+        /// <summary>
+        /// Identifies a trip where a connection between routes ends.
+        /// If to_trip_id is defined, the transfer will apply to the departing trip for the given to_stop_id.
+        /// If both to_trip_id and to_route_id are defined, the trip_id must belong to the route_id, and to_trip_id will take precedence.REQUIRED if transfer_type is 4 or 5.
+        /// </summary>
+        [FieldName("to_trip_id")]
+        public string ToTripId { get; set; }
+
+
+    /// <summary>
+    /// Gets or sets the type of connection for the specified (from_stop_id, to_stop_id) pair.
+    /// </summary>
+    [Required]
         [FieldName("transfer_type")]
         public TransferType TransferType { get; set; }
 
@@ -70,6 +101,10 @@ namespace GTFS.Entities
                 hash = hash * 73 + this.FromStopId.GetHashCodeEmptyWhenNull();
                 hash = hash * 73 + this.MinimumTransferTime.GetHashCodeEmptyWhenNull();
                 hash = hash * 73 + this.ToStopId.GetHashCodeEmptyWhenNull();
+                hash = hash * 73 + this.FromRouteId.GetHashCodeEmptyWhenNull();
+                hash = hash * 73 + this.ToRouteId.GetHashCodeEmptyWhenNull();
+                hash = hash * 73 + this.FromTripId.GetHashCodeEmptyWhenNull();
+                hash = hash * 73 + this.ToTripId.GetHashCodeEmptyWhenNull();
                 hash = hash * 73 + this.TransferType.GetHashCode();
                 return hash;
             }
@@ -85,6 +120,10 @@ namespace GTFS.Entities
             {
                 return (this.FromStopId ?? string.Empty) == (other.FromStopId ?? string.Empty) &&
                     (this.ToStopId ?? string.Empty) == (other.ToStopId ?? string.Empty) &&
+                    (this.FromRouteId ?? string.Empty) == (other.FromRouteId ?? string.Empty) &&
+                    (this.ToRouteId ?? string.Empty) == (other.ToRouteId ?? string.Empty) &&
+                    (this.FromTripId ?? string.Empty) == (other.FromTripId ?? string.Empty) &&
+                    (this.ToTripId ?? string.Empty) == (other.ToTripId ?? string.Empty) &&
                     this.TransferType == other.TransferType &&
                     (this.MinimumTransferTime ?? string.Empty) == (other.MinimumTransferTime ?? string.Empty);
             }

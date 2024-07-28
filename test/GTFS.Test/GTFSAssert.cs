@@ -375,6 +375,10 @@ namespace GTFS.Test
             Assert.AreEqual(actual.FromStopId, expected.FromStopId);
             Assert.AreEqual(actual.MinimumTransferTime, expected.MinimumTransferTime);
             Assert.AreEqual(actual.ToStopId, expected.ToStopId);
+            Assert.AreEqual(actual.FromRouteId, expected.FromRouteId);
+            Assert.AreEqual(actual.ToRouteId, expected.ToRouteId);
+            Assert.AreEqual(actual.FromTripId, expected.FromTripId);
+            Assert.AreEqual(actual.ToTripId, expected.ToTripId);
             Assert.AreEqual(actual.TransferType, expected.TransferType);
         }
 
