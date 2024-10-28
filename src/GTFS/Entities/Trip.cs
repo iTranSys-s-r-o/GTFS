@@ -90,6 +90,12 @@ namespace GTFS.Entities
         public WheelchairAccessibilityType? AccessibilityType { get; set; }
 
         /// <summary>
+        /// Indicates whether bikes are allowed.
+        /// </summary>
+        [FieldName("bikes_allowed")]
+        public BikesAllowed? BikesAllowed { get; set; }
+
+        /// <summary>
         /// Returns a description of this trip.
         /// </summary>
         /// <returns></returns>
@@ -116,6 +122,7 @@ namespace GTFS.Entities
                 hash = hash * 89 + this.ServiceId.GetHashCodeEmptyWhenNull();
                 hash = hash * 89 + this.ShapeId.GetHashCodeEmptyWhenNull();
                 hash = hash * 89 + this.ShortName.GetHashCodeEmptyWhenNull();
+                hash = hash * 89 + this.BikesAllowed.GetHashCode();
                 return hash;
             }
         }
@@ -129,6 +136,7 @@ namespace GTFS.Entities
             if (other != null)
             {
                 return this.AccessibilityType == other.AccessibilityType &&
+                       this.BikesAllowed == other.BikesAllowed &&
                     (this.BlockId ?? string.Empty) == (other.BlockId ?? string.Empty) &&
                     this.Direction == other.Direction &&
                     (this.Headsign ?? string.Empty) == (other.Headsign ?? string.Empty) &&
@@ -149,6 +157,7 @@ namespace GTFS.Entities
             return new Trip()
             {
                 AccessibilityType = trip.AccessibilityType,
+                BikesAllowed = trip.BikesAllowed,
                 BlockId = trip.BlockId,
                 Direction = trip.Direction,
                 Headsign = trip.Headsign,
