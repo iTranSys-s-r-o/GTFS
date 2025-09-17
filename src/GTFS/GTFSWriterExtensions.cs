@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.IO;
 using GTFS.IO;
 
@@ -10,32 +9,6 @@ namespace GTFS
   /// </summary>
   public static class GTFSWriterExtensions
   {
-    public static IEnumerable GetItems<T>(this T feed, string targetName)
-      where T : IGTFSFeed, new()
-    {
-      switch (targetName)
-      {
-        case "feed_info": return new[] { feed.GetFeedInfo() };
-
-        case "agency": return feed.Agencies;
-        case "calendar": return feed.Calendars;
-        case "calendar_dates": return feed.CalendarDates;
-        case "fare_attributes": return feed.FareAttributes;
-        case "fare_rules": return feed.FareRules;
-        case "frequencies": return feed.Frequencies;
-        case "routes": return feed.Routes;
-        case "shapes": return feed.Shapes;
-        case "stops": return feed.Stops;
-        case "stop_times": return feed.StopTimes;
-        case "transfers": return feed.Transfers;
-        case "trips": return feed.Trips;
-        case "levels": return feed.Levels;
-        case "pathways": return feed.Pathways;
-        default:
-          throw new ArgumentOutOfRangeException(nameof(targetName));
-      }
-    }
-
     /// <summary>
     /// Writes a GTFS feed.
     /// </summary>

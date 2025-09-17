@@ -34,24 +34,6 @@ namespace GTFS.IO
     private readonly DirectoryInfo _directory;
     private readonly List<IGTFSTargetFile> _targets;
 
-    private static readonly string[] TargetNames = {
-      "agency",
-      "calendar_dates",
-      "calendar",
-      "fare_attributes",
-      "fare_rules",
-      "feed_info",
-      "frequencies",
-      "routes",
-      "shapes",
-      "stops",
-      "stop_times",
-      "transfers",
-      "trips",
-      "levels",
-      "pathways"
-    };
-
     /// <summary>
     /// Creates a new GTFS directory target.
     /// </summary>
@@ -71,7 +53,7 @@ namespace GTFS.IO
       {
         // write files on-by-one.
 
-        foreach (var targetName in TargetNames)
+        foreach (var targetName in GTFSFiles.Names)
         {
           if (addTarget == null || addTarget(targetName)) 
             _targets.Add(new GTFSTargetFileStream(OpenWrite(_directory.FullName, targetName), targetName));
