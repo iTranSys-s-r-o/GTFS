@@ -1339,7 +1339,7 @@ namespace GTFS
                     stop.Timezone = this.ParseFieldString(header.Name, fieldName, value);
                     break;
                 case "wheelchair_boarding":
-                    stop.WheelchairBoarding = this.ParseFieldString(header.Name, fieldName, value);
+                    stop.WheelchairBoarding = this.ParseFieldAccessibilityType(header.Name, fieldName, value);
                     break;
                 case "level_id":
                     stop.LevelId = this.ParseFieldString(header.Name, fieldName, value);

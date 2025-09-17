@@ -619,7 +619,7 @@ namespace GTFS
                     data[8] = this.WriteFieldLocationType("stops", "location_type", entity.LocationType);
                     data[9] = this.WriteFieldString("stops", "parent_station", entity.ParentStation);
                     data[10] = this.WriteFieldString("stops", "stop_timezone", entity.Timezone);
-                    data[11] = this.WriteFieldString("stops", "wheelchair_boarding", entity.WheelchairBoarding);
+                    data[11] = this.WriteFieldAccessibilityType("stops", "wheelchair_boarding", entity.WheelchairBoarding);
                     data[12] = this.WriteFieldString("stops", "level_id", entity.LevelId);
                     data[13] = this.WriteFieldString("stops", "platform_code", entity.PlatformCode);
                     file.Write(data);

@@ -105,7 +105,7 @@ namespace GTFS.Entities
         /// Gets or sets whether wheelchair boardings are possible from the specified stop or station. The field can have the following values:
         /// </summary>
         [FieldName(" wheelchair_boarding ")]
-        public string WheelchairBoarding { get; set; }
+        public WheelchairAccessibilityType? WheelchairBoarding { get; set; }
 
         /// <summary>
         /// Level of the location. The same level can be used by multiple unlinked stations.
@@ -155,7 +155,7 @@ namespace GTFS.Entities
                 hash = hash * 43 + this.ParentStation.GetHashCodeEmptyWhenNull();
                 hash = hash * 43 + this.Timezone.GetHashCodeEmptyWhenNull();
                 hash = hash * 43 + this.Url.GetHashCodeEmptyWhenNull();
-                hash = hash * 43 + this.WheelchairBoarding.GetHashCodeEmptyWhenNull();
+                hash = hash * 43 + this.WheelchairBoarding.GetHashCode();
                 hash = hash * 43 + this.Zone.GetHashCodeEmptyWhenNull();
                 hash = hash * 43 + this.LevelId.GetHashCodeEmptyWhenNull();
                 hash = hash * 43 + this.PlatformCode.GetHashCodeEmptyWhenNull();
@@ -181,7 +181,7 @@ namespace GTFS.Entities
                     (this.ParentStation ?? string.Empty) == (other.ParentStation ?? string.Empty) &&
                     (this.Timezone ?? string.Empty) == (other.Timezone ?? string.Empty) &&
                     (this.Url ?? string.Empty) == (other.Url ?? string.Empty) &&
-                    (this.WheelchairBoarding ?? string.Empty) == (other.WheelchairBoarding ?? string.Empty) &&
+                    this.WheelchairBoarding == other.WheelchairBoarding &&
                     (this.Zone ?? string.Empty) == (other.Zone ?? string.Empty) &&
                     (this.LevelId ?? string.Empty) == (other.LevelId ?? string.Empty) &&
                     (this.PlatformCode ?? string.Empty) == (other.PlatformCode ?? string.Empty);
