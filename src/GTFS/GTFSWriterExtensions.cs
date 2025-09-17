@@ -1,33 +1,64 @@
 using System;
+using System.Collections;
 using System.IO;
 using GTFS.IO;
 
 namespace GTFS
 {
-    /// <summary>
-    /// Contains extension methods for the GTFS writer.
-    /// </summary>
-    public static class GTFSWriterExtensions
+  /// <summary>
+  /// Contains extension methods for the GTFS writer.
+  /// </summary>
+  public static class GTFSWriterExtensions
+  {
+    public static IEnumerable GetItems<T>(this T feed, string targetName)
+      where T : IGTFSFeed, new()
     {
-        /// <summary>
-        /// Writes a GTFS feed.
-        /// </summary>
-        /// <param name="writer">The writer.</param>
-        /// <param name="feed">The feed.</param>
-        /// <param name="path">The path.</param>
-        /// <typeparam name="T">The feed type.</typeparam>
-        public static void Write<T>(this GTFSWriter<T> writer, T feed, string path) where T : IGTFSFeed, new()
-        {
-            if (path == null) throw new ArgumentNullException(nameof(path));
+      switch (targetName)
+      {
+        case "feed_info": return new[] { feed.GetFeedInfo() };
 
-            if (Directory.Exists(path))
-            {
-                var target = new GTFSDirectoryTarget(new DirectoryInfo(path));
-                writer.Write(feed, target);
-                return;
-            }
-            
-            throw new ArgumentException("Could not write GTFS feed, directory not found.", nameof(path));
-        }
+        case "agency": return feed.Agencies;
+        case "calendar": return feed.Calendars;
+        case "calendar_dates": return feed.CalendarDates;
+        case "fare_attributes": return feed.FareAttributes;
+        case "fare_rules": return feed.FareRules;
+        case "frequencies": return feed.Frequencies;
+        case "routes": return feed.Routes;
+        case "shapes": return feed.Shapes;
+        case "stops": return feed.Stops;
+        case "stop_times": return feed.StopTimes;
+        case "transfers": return feed.Transfers;
+        case "trips": return feed.Trips;
+        case "levels": return feed.Levels;
+        case "pathways": return feed.Pathways;
+        default:
+          throw new ArgumentOutOfRangeException(nameof(targetName));
+      }
     }
+
+    /// <summary>
+    /// Writes a GTFS feed.
+    /// </summary>
+    /// <param name="writer">The writer.</param>
+    /// <param name="feed">The feed.</param>
+    /// <param name="path">The path.</param>
+    /// <param name="includeEmptyFiles">export empty files?</param>
+    /// <typeparam name="T">The feed type.</typeparam>
+    public static void Write<T>(this GTFSWriter<T> writer, T feed, string path, bool includeEmptyFiles = false) where T : IGTFSFeed, new()
+    {
+      if (path == null) throw new ArgumentNullException(nameof(path));
+
+      if (Directory.Exists(path))
+      {
+        var target = new GTFSDirectoryTarget(new DirectoryInfo(path));
+
+        target.BuildTargets(targetName => includeEmptyFiles || feed.GetItems(targetName).HasAny());
+
+        writer.Write(feed, target, includeEmptyFiles);
+        return;
+      }
+
+      throw new ArgumentException("Could not write GTFS feed, directory not found.", nameof(path));
+    }
+  }
 }
