@@ -38,6 +38,13 @@ namespace GTFS
   public class GTFSWriter<T> where T : IGTFSFeed
   {
     /// <summary>
+    /// If true, all lists will be sorted by id before writing.
+    /// Default: false
+    /// </summary>
+    public bool SortListsById { get; set; } = false;
+
+
+    /// <summary>
     /// Writes the given feed to the given target files.
     /// </summary>
     /// <param name="feed"></param>
@@ -48,19 +55,42 @@ namespace GTFS
       bool CheckEmpty<T1>(IEnumerable<T1> list) => includeEmptyFiles || (list != null && list.Any());
 
       // order files by id
-      var agenciesToWrite = feed.Agencies.OrderBy(x => x.Id).ToList();
-      var calendarDatesToWrite = feed.CalendarDates.OrderBy(x => x.ServiceId).OrderBy(y => y.ExceptionType).OrderBy(z => z.Date).ToList();
-      var calendarsToWrite = feed.Calendars.OrderBy(x => x.ServiceId).ToList();
-      var fareAttributesToWrite = feed.FareAttributes.OrderBy(x => x.FareId).ToList();
-      var fareRulesToWrite = feed.FareRules.OrderBy(x => x.RouteId).ToList();
-      var frequenciesToWrite = feed.Frequencies.OrderBy(x => x.TripId).ToList();
-      var routesToWrite = feed.Routes.OrderBy(x => x.Id).ToList();
-      var stopsToWrite = feed.Stops.OrderBy(x => x.Id).ToList();
-      var stopTimesToWrite = feed.StopTimes.OrderBy(x => x.TripId).ToList();
-      var tripsToWrite = feed.Trips.OrderBy(x => x.Id).ToList();
-      var levelsToWrite = feed.Levels.OrderBy(x => x.Id).ToList();
-      var pathwaysToWrite = feed.Pathways.OrderBy(x => x.Id).ToList();
-
+      var agenciesToWrite = SortListsById 
+        ? feed.Agencies.OrderBy(x => x.Id).ToList() 
+        : feed.Agencies.ToList();
+      var calendarDatesToWrite = SortListsById
+        ? feed.CalendarDates.OrderBy(x => x.ServiceId).ThenBy(x => x.ExceptionType).ThenBy(x => x.Date).ToList()
+        : feed.CalendarDates.ToList();
+      var calendarsToWrite = SortListsById
+        ? feed.Calendars.OrderBy(x => x.ServiceId).ToList()
+        : feed.Calendars.ToList();
+      var fareAttributesToWrite = SortListsById
+        ? feed.FareAttributes.OrderBy(x => x.FareId).ToList()
+        : feed.FareAttributes.ToList();
+      var fareRulesToWrite = SortListsById
+        ? feed.FareRules.OrderBy(x => x.RouteId).ToList()
+        : feed.FareRules.ToList();
+      var frequenciesToWrite = SortListsById
+        ? feed.Frequencies.OrderBy(x => x.TripId).ToList()
+        : feed.Frequencies.ToList();
+      var routesToWrite = SortListsById
+        ? feed.Routes.OrderBy(x => x.Id).ToList()
+        : feed.Routes.ToList();
+      var stopsToWrite = SortListsById
+        ? feed.Stops.OrderBy(x => x.Id).ToList()
+        : feed.Stops.ToList();
+      var stopTimesToWrite = SortListsById
+        ? feed.StopTimes.OrderBy(x => x.TripId).ToList()
+        : feed.StopTimes.ToList();
+      var tripsToWrite = SortListsById
+        ? feed.Trips.OrderBy(x => x.Id).ToList()
+        : feed.Trips.ToList();
+      var levelsToWrite = SortListsById
+        ? feed.Levels.OrderBy(x => x.Id).ToList()
+        : feed.Levels.ToList();
+      var pathwaysToWrite = SortListsById
+        ? feed.Pathways.OrderBy(x => x.Id).ToList()
+        : feed.Pathways.ToList();
       
       // write files on-by-one.
       Write(target.FirstOrDefault(x => x.Name == "feed_info"), feed.GetFeedInfo());
