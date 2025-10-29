@@ -726,7 +726,7 @@ namespace GTFS
       if (file != null)
       {
         bool initialized = false;
-        var data = new string[4];
+        var data = new string[8];
         foreach (var entity in entities)
         {
           if (!initialized)
@@ -739,8 +739,12 @@ namespace GTFS
             // write headers.
             data[0] = "from_stop_id";
             data[1] = "to_stop_id";
-            data[2] = "transfer_type";
-            data[3] = "min_transfer_time";
+            data[2] = "from_route_id";
+            data[3] = "to_route_id";
+            data[4] = "from_trip_id";
+            data[5] = "to_trip_id";
+            data[6] = "transfer_type";
+            data[7] = "min_transfer_time";
             file.Write(data);
             initialized = true;
           }
@@ -748,8 +752,12 @@ namespace GTFS
           // write details.
           data[0] = this.WriteFieldString("transfers", "from_stop_id", entity.FromStopId);
           data[1] = this.WriteFieldString("transfers", "to_stop_id", entity.ToStopId);
-          data[2] = this.WriteFieldTransferType("transfers", "transfer_type", entity.TransferType);
-          data[3] = this.WriteFieldString("transfers", "min_transfer_time", entity.MinimumTransferTime);
+          data[2] = this.WriteFieldString("transfers", "from_route_id", entity.FromRouteId);
+          data[3] = this.WriteFieldString("transfers", "to_route_id", entity.ToRouteId);
+          data[4] = this.WriteFieldString("transfers", "from_trip_id", entity.FromTripId);
+          data[5] = this.WriteFieldString("transfers", "to_trip_id", entity.ToTripId);
+          data[6] = this.WriteFieldTransferType("transfers", "transfer_type", entity.TransferType);
+          data[7] = this.WriteFieldString("transfers", "min_transfer_time", entity.MinimumTransferTime);
           file.Write(data);
         }
         file.Close();
