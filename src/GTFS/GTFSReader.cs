@@ -1444,8 +1444,8 @@ namespace GTFS
         protected virtual Transfer ParseTransfer(T feed, GTFSSourceFileHeader header, string[] data)
         {
             // check required fields.
-            this.CheckRequiredField(header, header.Name, this.TransferMap, "from_stop_id");
-            this.CheckRequiredField(header, header.Name, this.TransferMap, "to_stop_id");
+            //this.CheckRequiredField(header, header.Name, this.TransferMap, "from_stop_id");
+            //this.CheckRequiredField(header, header.Name, this.TransferMap, "to_stop_id");
             this.CheckRequiredField(header, header.Name, this.TransferMap, "transfer_type");
 
             // parse/set all fields.
