@@ -1109,22 +1109,8 @@ namespace GTFS
     /// <param name="fieldName"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    protected string WriteFieldTransferType(string name, string fieldName, TransferType value)
-    {
-      switch (value)
-      {
-        case TransferType.Recommended:
-          return "0";
-        case TransferType.TimedTransfer:
-          return "1";
-        case TransferType.MinimumTime:
-          return "2";
-        case TransferType.NotPossible:
-          return "3";
-      }
-
-      return string.Empty;
-    }
+    protected string WriteFieldTransferType(string name, string fieldName, TransferType value) => 
+      ((int)value).ToString();
 
     /// <summary>
     /// Writes an accessibility type.
