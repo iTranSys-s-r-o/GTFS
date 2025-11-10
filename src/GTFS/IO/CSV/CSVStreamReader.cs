@@ -140,17 +140,49 @@ namespace GTFS.IO.CSV
       {
         return false;
       }
-      
-      var pattern = $"(?:{_seperator}|^)\"(?<field>([^\"]|\"\")*)\"|(?:{_seperator}|^)(?<field>[^{_seperator}]*)";
-      var matches = Regex.Matches(line, pattern);
-      
-      _current = matches
-        .Select(m => m.Groups["field"].Value.Replace("\"\"", "\""))
-        .ToArray();
-      
+
+      var fields = new List<string>();
+      var sb = new StringBuilder();
+      bool inQuotes = false;
+
+      for (int i = 0; i < line.Length; i++)
+      {
+        char c = line[i];
+        if (inQuotes)
+        {
+          if (c == '"')
+          {
+            if (i + 1 < line.Length && line[i + 1] == '"')
+            {
+              sb.Append('"');
+              i++; // Skip the escaped quote
+            }
+            else
+              inQuotes = false;
+          }
+          else
+            sb.Append(c);
+        }
+        else
+        {
+          if (c == '"')
+            inQuotes = true;
+          else if (c == _seperator)
+          {
+            fields.Add(sb.ToString());
+            sb.Clear();
+          }
+          else
+            sb.Append(c);
+        }
+      }
+
+      fields.Add(sb.ToString());
+
+      _current = fields.ToArray();
       return true;
     }
-
+      
     /// <summary>
     /// Resets this enumerator.
     /// </summary>
