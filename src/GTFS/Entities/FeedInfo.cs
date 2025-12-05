@@ -70,6 +70,18 @@ namespace GTFS.Entities
         public string Version { get; set; }
 
         /// <summary>
+        /// Email address for communication regarding the GTFS dataset and data publishing practices. feed_contact_email is a technical contact for GTFS-consuming applications. Provide customer service contact information through agency.txt. It's recommended that at least one of feed_contact_email or feed_contact_url are provided.
+        /// </summary>
+        [FieldName("feed_contact_email")]
+        public string ContactEmail { get; set; }
+
+        /// <summary>
+        /// URL for contact information, a web-form, support desk, or other tools for communication regarding the GTFS dataset and data publishing practices. feed_contact_url is a technical contact for GTFS-consuming applications. Provide customer service contact information through agency.txt. It's recommended that at least one of feed_contact_url or feed_contact_email are provided.
+        /// </summary>
+        [FieldName("feed_contact_url")]
+        public string ContactUrl { get; set; }
+
+        /// <summary>
         /// Serves as a hash function.
         /// </summary>
         /// <returns></returns>
@@ -84,6 +96,8 @@ namespace GTFS.Entities
                 hash = hash * 41 + (this.PublisherUrl ?? string.Empty).GetHashCode();
                 hash = hash * 41 + (this.StartDate ?? string.Empty).GetHashCode();
                 hash = hash * 41 + (this.Version ?? string.Empty).GetHashCode();
+                hash = hash * 41 + (this.ContactEmail ?? string.Empty).GetHashCode();
+                hash = hash * 41 + (this.ContactUrl ?? string.Empty).GetHashCode();
                 return hash;
             }
         }
@@ -96,12 +110,15 @@ namespace GTFS.Entities
             var other = (obj as FeedInfo);
             if (other != null)
             {
-                return (this.EndDate ?? string.Empty) == (other.EndDate ?? string.Empty) &&
-                    (this.Lang ?? string.Empty) == (other.Lang ?? string.Empty) &&
-                    (this.PublisherName ?? string.Empty) == (other.PublisherName ?? string.Empty) &&
-                    (this.PublisherUrl ?? string.Empty) == (other.PublisherUrl ?? string.Empty) &&
-                    (this.StartDate ?? string.Empty) == (other.StartDate ?? string.Empty) &&
-                    (this.Version ?? string.Empty) == (other.Version ?? string.Empty);
+              return (this.EndDate ?? string.Empty) == (other.EndDate ?? string.Empty) &&
+                     (this.Lang ?? string.Empty) == (other.Lang ?? string.Empty) &&
+                     (this.PublisherName ?? string.Empty) == (other.PublisherName ?? string.Empty) &&
+                     (this.PublisherUrl ?? string.Empty) == (other.PublisherUrl ?? string.Empty) &&
+                     (this.StartDate ?? string.Empty) == (other.StartDate ?? string.Empty) &&
+                     (this.Version ?? string.Empty) == (other.Version ?? string.Empty) &&
+                     (this.ContactEmail ?? string.Empty) == (other.ContactEmail ?? string.Empty) &&
+                     (this.ContactUrl ?? string.Empty) == (other.ContactUrl ?? string.Empty);
+
             }
             return false;
         }

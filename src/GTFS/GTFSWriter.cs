@@ -432,6 +432,8 @@ namespace GTFS
           data[3] = "feed_start_date";
           data[4] = "feed_end_date";
           data[5] = "feed_version";
+          data[6] = "feed_contact_email";
+          data[7] = "feed_contact_url";
           file.Write(data);
           initialized = true;
         }
@@ -443,6 +445,8 @@ namespace GTFS
         data[3] = this.WriteFieldString("feed_info", "feed_start_date", entity.StartDate);
         data[4] = this.WriteFieldString("feed_info", "feed_end_date", entity.EndDate);
         data[5] = this.WriteFieldString("feed_info", "feed_version", entity.Version);
+        data[6] = this.WriteFieldString("feed_info", "feed_contact_email", entity.ContactEmail);
+        data[7] = this.WriteFieldString("feed_info", "feed_contact_url", entity.ContactUrl);
         file.Write(data);
         file.Close();
       }

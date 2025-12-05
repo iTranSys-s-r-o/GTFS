@@ -1045,6 +1045,12 @@ namespace GTFS
                 case "feed_version":
                     feedInfo.Version = this.ParseFieldString(header.Name, fieldName, value);
                     break;
+                case "feed_contact_email":
+                    feedInfo.ContactEmail = this.ParseFieldString(header.Name, fieldName, value);
+                    break;
+                case "feed_contact_url":
+                    feedInfo.ContactUrl = this.ParseFieldString(header.Name, fieldName, value);
+                    break;
             }
         }
 
