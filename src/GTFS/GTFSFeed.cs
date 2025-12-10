@@ -85,6 +85,8 @@ namespace GTFS
                 _feedInfo.StartDate = feedInfo.StartDate;
                 _feedInfo.Version = feedInfo.Version;
                 _feedInfo.Tag = feedInfo.Tag;
+                _feedInfo.ContactEmail = feedInfo.ContactEmail;
+                _feedInfo.ContactUrl = feedInfo.ContactUrl;
             }
         }
 

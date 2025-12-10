@@ -417,7 +417,7 @@ namespace GTFS
       if (file != null)
       {
         bool initialized = false;
-        var data = new string[6];
+        var data = new string[8];
         if (!initialized)
         {
           if (file.Exists)
